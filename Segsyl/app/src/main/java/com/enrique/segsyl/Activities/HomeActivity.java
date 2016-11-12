@@ -7,9 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.enrique.segsyl.Adapters.TemasAdapter;
 import com.enrique.segsyl.Models.Alumno;
@@ -25,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView tv_bienvenido;
     Spinner spinner;
     RecyclerView rv_temas;
+    Button bt_validar;
 
     private Alumno alumno;
 
@@ -39,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         tv_bienvenido = (TextView) findViewById(R.id.tv_bienvenido);
         spinner = (Spinner) findViewById(R.id.spinner);
         rv_temas = (RecyclerView) findViewById(R.id.rv_temas);
+        bt_validar = (Button) findViewById(R.id.bt_validar);
 
         setDataIntoSpinner();
 
@@ -58,6 +62,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        bt_validar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"TEMAS VALIDADOS!", Toast.LENGTH_SHORT).show();
             }
         });
 

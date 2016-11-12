@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         cursos3.add(c4);
 
         a1 = new Alumno("12200070","12200070","Enrique","Villarreal Carrillo",cursos1);
-        a2 = new Alumno("12200187","12200187","Giancarlos Junior","Claudio Zabaleta", cursos2);
+        a2 = new Alumno("12200187","12200187","Giancarlos Junior","Claudio Zavaleta", cursos2);
         a3 = new Alumno("12200055","12200055","Takeshi Santiago","Farro Hinoshita",cursos3);
     }
 }
