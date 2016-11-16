@@ -10,6 +10,7 @@ import android.os.Parcelable;
 public class Tema implements Parcelable{
     String nombreTema;
     boolean realizado = false;
+    String comentario;
 
     public Tema(String nombreTema, boolean realizado) {
         this.nombreTema = nombreTema;
@@ -19,6 +20,7 @@ public class Tema implements Parcelable{
     protected Tema(Parcel in) {
         nombreTema = in.readString();
         realizado = in.readByte() != 0;
+        comentario = in.readString();
     }
 
     public static final Creator<Tema> CREATOR = new Creator<Tema>() {
@@ -32,6 +34,14 @@ public class Tema implements Parcelable{
             return new Tema[size];
         }
     };
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
     public String getNombreTema() {
         return nombreTema;
@@ -58,5 +68,6 @@ public class Tema implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(nombreTema);
         parcel.writeByte((byte) (realizado ? 1 : 0));
+        parcel.writeString(comentario);
     }
 }

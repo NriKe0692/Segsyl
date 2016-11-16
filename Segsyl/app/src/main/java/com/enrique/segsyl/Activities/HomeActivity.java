@@ -1,5 +1,6 @@
 package com.enrique.segsyl.Activities;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView tv_bienvenido;
     Spinner spinner;
     RecyclerView rv_temas;
-    Button bt_validar;
+    FloatingActionButton fab;
 
     private Alumno alumno;
 
@@ -41,8 +42,8 @@ public class HomeActivity extends AppCompatActivity {
 
         tv_bienvenido = (TextView) findViewById(R.id.tv_bienvenido);
         spinner = (Spinner) findViewById(R.id.spinner);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         rv_temas = (RecyclerView) findViewById(R.id.rv_temas);
-        bt_validar = (Button) findViewById(R.id.bt_validar);
 
         setDataIntoSpinner();
 
@@ -65,13 +66,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        bt_validar.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"TEMAS VALIDADOS!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Temas Guardados",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void clearRecyclerView() {

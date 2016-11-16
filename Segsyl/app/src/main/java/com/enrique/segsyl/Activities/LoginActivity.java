@@ -64,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
+            else{
+                et_password.setError("Password incorrecto");
+            }
+        }
+        else{
+            et_codigo.setError("Codigo incorrecto");
         }
 
     }

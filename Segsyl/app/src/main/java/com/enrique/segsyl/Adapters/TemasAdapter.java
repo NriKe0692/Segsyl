@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,9 +48,13 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
             @Override
             public void onClick(View view) {
                 if(data.get(position).isRealizado()){
+                    holder.et_comentario.setVisibility(View.GONE);
+                    holder.et_comentario.setText("");
                     holder.tv_temas.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.checkbox_off_background,0);
                     data.get(position).setRealizado(false);
                 }else{
+                    holder.et_comentario.setText("");
+                    holder.et_comentario.setVisibility(View.VISIBLE);
                     holder.tv_temas.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.checkbox_on_background,0);
                     data.get(position).setRealizado(true);
                 }
@@ -63,12 +68,13 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-
         TextView tv_temas;
+        EditText et_comentario;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_temas = (TextView) itemView.findViewById(R.id.tv_temas);
+            et_comentario = (EditText) itemView.findViewById(R.id.et_comentario);
         }
     }
 }
