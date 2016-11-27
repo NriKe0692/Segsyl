@@ -1,104 +1,162 @@
 package com.enrique.segsyl.Activities;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.enrique.segsyl.Adapters.TemasAdapter;
+import com.enrique.segsyl.Adapters.CursosAdapter;
 import com.enrique.segsyl.Models.Alumno;
-import com.enrique.segsyl.Models.Curso;
-import com.enrique.segsyl.Models.Tema;
+import com.enrique.segsyl.Models.CursosResponse;
 import com.enrique.segsyl.R;
+import com.enrique.segsyl.SegsylApp;
+import com.enrique.segsyl.Utils.PreferenceManager;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
     TextView tv_bienvenido;
-    Spinner spinner;
-    RecyclerView rv_temas;
-    FloatingActionButton fab;
 
-    private Alumno alumno;
+
+    LinearLayout container1;
+    LinearLayout container2;
+    LinearLayout container3;
+
+    RecyclerView rv_cursos1;
+    RecyclerView rv_cursos2;
+    RecyclerView rv_cursos3;
+
+
+    TextView tv_semana1;
+    TextView tv_semana2;
+    TextView tv_semana3;
+
+    PreferenceManager mPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Bundle b = getIntent().getExtras();
-        alumno = b.getParcelable("alumno");
+        mPreference = PreferenceManager.getInstance(this);
 
-        tv_bienvenido = (TextView) findViewById(R.id.tv_bienvenido);
-        spinner = (Spinner) findViewById(R.id.spinner);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        rv_temas = (RecyclerView) findViewById(R.id.rv_temas);
+        container1 = (LinearLayout) findViewById(R.id.container1);
+        container2 = (LinearLayout) findViewById(R.id.container2);
+        container3 = (LinearLayout) findViewById(R.id.container3);
 
-        setDataIntoSpinner();
+        rv_cursos1 = (RecyclerView) findViewById(R.id.rv_cursos1);
+        rv_cursos2 = (RecyclerView) findViewById(R.id.rv_cursos2);
+        rv_cursos3 = (RecyclerView) findViewById(R.id.rv_cursos3);
 
-        tv_bienvenido.setText("Bienvenido " + alumno.getApellidos() + ", " + alumno.getNombre());
+        tv_semana1 = (TextView) findViewById(R.id.tv_semana1);
+        tv_semana2 = (TextView) findViewById(R.id.tv_semana2);
+        tv_semana3 = (TextView) findViewById(R.id.tv_semana3);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        getDataForRv();
+
+    }
+
+//    private void clearRecyclerView() {
+//        CursosAdapter adapter = new CursosAdapter(new ArrayList<Tema>(),this);
+//        rv_temas.setAdapter(adapter);
+//        rv_temas.setLayoutManager(new LinearLayoutManager(this));
+//    }
+//
+//    private void setDataIntoRecyclerView(ArrayList<Tema> temas) {
+//        CursosAdapter adapter = new CursosAdapter(temas,this);
+//        rv_temas.setAdapter(adapter);
+//        rv_temas.setLayoutManager(new LinearLayoutManager(this));
+//    }
+
+    private void getDataForRv(){
+        String alumno_json = mPreference.getPrefernceAlumnoString();
+        Alumno a = mPreference.getPreferencAlumno(alumno_json);
+        Call<CursosResponse> call = SegsylApp.getInstance().getServices().getCursosDeAlumno(a.getUsername());
+
+        call.enqueue(new Callback<CursosResponse>() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if(position != 0){
-                    setDataIntoRecyclerView(alumno.getCursos().get(position-1).getTemas());
-                }
-                if(position == 0){
-                    clearRecyclerView();
+            public void onResponse(Call<CursosResponse> call, Response<CursosResponse> response) {
+                if(response.isSuccessful()){
+                    showContainers(response.body().getSemanas().size());
+                    setupViews(response.body().getSemanas());
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onFailure(Call<CursosResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Problemas con la conexión a Internet. Por favor intente otra vez",Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Temas Guardados",Toast.LENGTH_SHORT).show();
+    private void showContainers(int size) {
+        if(size == 1){
+            container1.setVisibility(View.VISIBLE);
+        }else{
+            if(size == 2){
+                container1.setVisibility(View.VISIBLE);
+                container2.setVisibility(View.VISIBLE);
+            }else{
+                if(size == 3){
+                    container1.setVisibility(View.VISIBLE);
+                    container2.setVisibility(View.VISIBLE);
+                    container3.setVisibility(View.VISIBLE);
+                }
             }
-        });
-    }
-
-    private void clearRecyclerView() {
-        TemasAdapter adapter = new TemasAdapter(new ArrayList<Tema>(),this);
-        rv_temas.setAdapter(adapter);
-        rv_temas.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void setDataIntoRecyclerView(ArrayList<Tema> temas) {
-        TemasAdapter adapter = new TemasAdapter(temas,this);
-        rv_temas.setAdapter(adapter);
-        rv_temas.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 
 
-    private void setDataIntoSpinner() {
-        List<String> list = new ArrayList();
+    private void setupViews(ArrayList<CursosResponse.Semanas> semanas) {
+        String alumno_json = mPreference.getPrefernceAlumnoString();
+        tv_bienvenido.setText(mPreference.getPreferencAlumno(alumno_json).getUsername());
 
-        list.add("Seleccione un Curso");
+        if(semanas.size() == 1){
+            tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
+            CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
+            rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
+            rv_cursos1.setAdapter(adapter1);
+        }else{
+            if(semanas.size() == 2){
+                tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
+                CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
+                rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
+                rv_cursos1.setAdapter(adapter1);
 
-        for (Curso c: alumno.getCursos()) {
-            list.add(c.getNombre());
+                tv_semana2.setText("Semana del " + semanas.get(1).getFechaInicio() + " al " + semanas.get(1).getFechaFin());
+                CursosAdapter adapter2 = new CursosAdapter(semanas.get(1).getAsignaturas(),this);
+                rv_cursos2.setLayoutManager(new LinearLayoutManager(this));
+                rv_cursos2.setAdapter(adapter2);
+            }else{
+                if(semanas.size() == 3){
+                    tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
+                    CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
+                    rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
+                    rv_cursos1.setAdapter(adapter1);
+
+                    tv_semana2.setText("Semana del " + semanas.get(1).getFechaInicio() + " al " + semanas.get(1).getFechaFin());
+                    CursosAdapter adapter2 = new CursosAdapter(semanas.get(1).getAsignaturas(),this);
+                    rv_cursos2.setLayoutManager(new LinearLayoutManager(this));
+                    rv_cursos2.setAdapter(adapter2);
+
+                    tv_semana3.setText("Semana del " + semanas.get(2).getFechaInicio() + " al " + semanas.get(2).getFechaFin());
+                    CursosAdapter adapter3 = new CursosAdapter(semanas.get(2).getAsignaturas(),this);
+                    rv_cursos3.setLayoutManager(new LinearLayoutManager(this));
+                    rv_cursos3.setAdapter(adapter3);
+                }
+            }
         }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-    }
 
+
+    }
 }

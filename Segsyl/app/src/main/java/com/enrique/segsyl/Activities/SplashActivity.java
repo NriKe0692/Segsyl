@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.enrique.segsyl.R;
+import com.enrique.segsyl.Utils.PreferenceManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -23,8 +24,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goNext() {
-        Intent intent = new Intent(this,LoginActivity.class);
-        startActivity(intent);
-        finish();
+        if(!PreferenceManager.getInstance(this).getPrefernceAlumnoString().isEmpty()){
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 }

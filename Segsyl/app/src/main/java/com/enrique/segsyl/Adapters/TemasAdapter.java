@@ -2,12 +2,10 @@ package com.enrique.segsyl.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.EditText;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,13 +15,14 @@ import com.enrique.segsyl.R;
 import java.util.ArrayList;
 
 /**
- * Created by USUARIO on 12/11/2016.
+ * Created by USUARIO on 26/11/2016.
  */
 
-public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder> {
+public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder>{
 
-    ArrayList<Tema> data = new ArrayList<>();
+    ArrayList<Tema> data;
     Context context;
+
 
     public TemasAdapter(ArrayList<Tema> data, Context context) {
         this.data = data;
@@ -32,34 +31,42 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_tema,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.row_temas,parent,false);
+
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.tv_temas.setText(data.get(position).getNombreTema());
-        if(data.get(position).isRealizado()){
-            holder.tv_temas.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.checkbox_on_background,0);
-        }else{
-            holder.tv_temas.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.checkbox_off_background,0);
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        boolean chekeado = false;
+
+        holder.tv_nombre_tema.setText(data.get(position).getNombreTema());
+
+        if(data.get(position).isVerificado()){
+            holder.checkBox.setChecked(true);
+            chekeado = true;
         }
-        holder.tv_temas.setOnClickListener(new View.OnClickListener() {
+
+        final boolean finalChekeado = chekeado;
+
+        View.OnClickListener clickEnCheckBox = new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if(data.get(position).isRealizado()){
-                    holder.et_comentario.setVisibility(View.GONE);
-                    holder.et_comentario.setText("");
-                    holder.tv_temas.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.checkbox_off_background,0);
-                    data.get(position).setRealizado(false);
+            public void onClick(View v) {
+                if(finalChekeado == false){
+                    if(holder.checkBox.isChecked()){
+                        holder.checkBox.setChecked(false);
+                    }else{
+                        holder.checkBox.setChecked(true);
+                    }
                 }else{
-                    holder.et_comentario.setText("");
-                    holder.et_comentario.setVisibility(View.VISIBLE);
-                    holder.tv_temas.setCompoundDrawablesWithIntrinsicBounds(0,0,android.R.drawable.checkbox_on_background,0);
-                    data.get(position).setRealizado(true);
+                    Toast.makeText(context,"No puedes deshacer esto!",Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        };
+
+        if(chekeado == false){
+            holder.checkBox.setOnClickListener(clickEnCheckBox);
+        }
     }
 
     @Override
@@ -68,13 +75,14 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView tv_temas;
-        EditText et_comentario;
+
+        TextView tv_nombre_tema;
+        CheckBox checkBox;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            tv_temas = (TextView) itemView.findViewById(R.id.tv_temas);
-            et_comentario = (EditText) itemView.findViewById(R.id.et_comentario);
+            tv_nombre_tema = (TextView) itemView.findViewById(R.id.tv_nombre_tema);
+            checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
         }
     }
 }

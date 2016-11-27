@@ -1,52 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.enrique.segsyl.Activities.HomeActivity">
+
+<RelativeLayout
+
     android:id="@+id/activity_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.enrique.segsyl.Activities.HomeActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#90CAF9">
+        android:orientation="vertical">
 
         <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BIENVENIDO(A),"
+            android:textSize="30sp"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:id="@+id/tv_bienvenido"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="fadasdasdasd"
             android:layout_gravity="center_horizontal"
             android:textColor="#000000"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:text="ELVER GALARGA"/>
 
-        <Spinner
-            android:layout_marginTop="30dp"
+        <LinearLayout
+            android:id="@+id/container1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/seleccione_curso"
-            android:id="@+id/spinner" />
-        <!-- -->
-        <android.support.v7.widget.RecyclerView
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:id="@+id/rv_temas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_semana1"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"
+                android:text="Semana del 01/01/16 al 07/01/16"/>
+
+            <TextView
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CURSOS"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:id="@+id/textView1" />
+
+            <!--android.support.v7.widget.-->
+            <RecyclerView
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/rv_cursos1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/container2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_semana2"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CURSOS"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:id="@+id/textView2" />
+
+            <!---->
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/rv_cursos2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/container3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_semana3"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CURSOS"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:id="@+id/textView" />
+
+            <!---->
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/rv_cursos3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
-        android:src="@android:drawable/ic_menu_save" />
 </RelativeLayout>
+
+    </ScrollView>

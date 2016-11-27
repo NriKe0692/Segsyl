@@ -12,9 +12,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        def baseUrlwithoutAuth
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            baseUrlwithoutAuth = "http://192.168.1.22:8080/SyllabusWeb/"
+            buildConfigField "String", "BASE_URL", "\"$baseUrlwithoutAuth/\""
+        }
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            baseUrlwithoutAuth = "http://192.168.1.22:8080/SyllabusWeb/"
+            buildConfigField "String", "BASE_URL", "\"$baseUrlwithoutAuth/\""
         }
     }
 }
@@ -28,4 +37,10 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:25.0.+'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.google.code.gson:gson:2.4'
 }

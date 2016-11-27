@@ -1,46 +1,18 @@
 package com.enrique.segsyl.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
- * Created by USUARIO on 12/11/2016.
+ * Created by USUARIO on 26/11/2016.
  */
 
-public class Tema implements Parcelable{
+public class Tema implements Serializable{
     String nombreTema;
-    boolean realizado = false;
-    String comentario;
+    boolean verificado;
 
-    public Tema(String nombreTema, boolean realizado) {
+    public Tema(String nombreTema, boolean verificado) {
         this.nombreTema = nombreTema;
-        this.realizado = realizado;
-    }
-
-    protected Tema(Parcel in) {
-        nombreTema = in.readString();
-        realizado = in.readByte() != 0;
-        comentario = in.readString();
-    }
-
-    public static final Creator<Tema> CREATOR = new Creator<Tema>() {
-        @Override
-        public Tema createFromParcel(Parcel in) {
-            return new Tema(in);
-        }
-
-        @Override
-        public Tema[] newArray(int size) {
-            return new Tema[size];
-        }
-    };
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+        this.verificado = verificado;
     }
 
     public String getNombreTema() {
@@ -51,23 +23,11 @@ public class Tema implements Parcelable{
         this.nombreTema = nombreTema;
     }
 
-    public boolean isRealizado() {
-        return realizado;
+    public boolean isVerificado() {
+        return verificado;
     }
 
-    public void setRealizado(boolean realizado) {
-        this.realizado = realizado;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(nombreTema);
-        parcel.writeByte((byte) (realizado ? 1 : 0));
-        parcel.writeString(comentario);
+    public void setVerificado(boolean verificado) {
+        this.verificado = verificado;
     }
 }
