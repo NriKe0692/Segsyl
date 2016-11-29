@@ -16,13 +16,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            baseUrlwithoutAuth = "http://192.168.1.22:8080/SyllabusWeb/"
+            baseUrlwithoutAuth = "http://192.168.10.74:8080/SyllabusWeb/"
             buildConfigField "String", "BASE_URL", "\"$baseUrlwithoutAuth/\""
         }
         debug{
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            baseUrlwithoutAuth = "http://192.168.1.22:8080/SyllabusWeb/"
+            baseUrlwithoutAuth = "http://192.168.10.74:8080/SyllabusWeb/"
             buildConfigField "String", "BASE_URL", "\"$baseUrlwithoutAuth/\""
         }
     }

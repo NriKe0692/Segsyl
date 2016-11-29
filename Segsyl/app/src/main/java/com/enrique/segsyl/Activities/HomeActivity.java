@@ -61,6 +61,8 @@ public class HomeActivity extends AppCompatActivity {
         tv_semana2 = (TextView) findViewById(R.id.tv_semana2);
         tv_semana3 = (TextView) findViewById(R.id.tv_semana3);
 
+        tv_bienvenido = (TextView) findViewById(R.id.tv_bienvenido);
+
         getDataForRv();
 
     }
@@ -118,7 +120,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViews(ArrayList<CursosResponse.Semanas> semanas) {
         String alumno_json = mPreference.getPrefernceAlumnoString();
-        tv_bienvenido.setText(mPreference.getPreferencAlumno(alumno_json).getUsername());
+        System.out.println(alumno_json + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,");
+        Alumno a = mPreference.getPreferencAlumno(alumno_json);
+        tv_bienvenido.setText(a.getUsername());
 
         if(semanas.size() == 1){
             tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
@@ -155,8 +159,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         }
-
-
 
     }
 }
