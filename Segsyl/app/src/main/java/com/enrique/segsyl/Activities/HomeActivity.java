@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class HomeActivity extends AppCompatActivity {
 
     TextView tv_bienvenido;
@@ -61,25 +62,14 @@ public class HomeActivity extends AppCompatActivity {
         tv_semana2 = (TextView) findViewById(R.id.tv_semana2);
         tv_semana3 = (TextView) findViewById(R.id.tv_semana3);
 
+        tv_bienvenido = (TextView) findViewById(R.id.tv_bienvenido);
+
         getDataForRv();
 
     }
 
-//    private void clearRecyclerView() {
-//        CursosAdapter adapter = new CursosAdapter(new ArrayList<Tema>(),this);
-//        rv_temas.setAdapter(adapter);
-//        rv_temas.setLayoutManager(new LinearLayoutManager(this));
-//    }
-//
-//    private void setDataIntoRecyclerView(ArrayList<Tema> temas) {
-//        CursosAdapter adapter = new CursosAdapter(temas,this);
-//        rv_temas.setAdapter(adapter);
-//        rv_temas.setLayoutManager(new LinearLayoutManager(this));
-//    }
-
     private void getDataForRv(){
-        String alumno_json = mPreference.getPrefernceAlumnoString();
-        Alumno a = mPreference.getPreferencAlumno(alumno_json);
+        Alumno a = mPreference.getPreferencAlumno();
         Call<CursosResponse> call = SegsylApp.getInstance().getServices().getCursosDeAlumno(a.getUsername());
 
         call.enqueue(new Callback<CursosResponse>() {
@@ -117,27 +107,22 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void setupViews(ArrayList<CursosResponse.Semanas> semanas) {
-        String alumno_json = mPreference.getPrefernceAlumnoString();
-        tv_bienvenido.setText(mPreference.getPreferencAlumno(alumno_json).getUsername());
+        Alumno a = mPreference.getPreferencAlumno();
+        tv_bienvenido.setText(a.getUsername());
 
-        if(semanas.size() == 1){
+        if(semanas.size() == 1 && semanas.get(0).getAsignaturas().size() != 0){
             tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
             CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
             rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
             rv_cursos1.setAdapter(adapter1);
         }else{
-            if(semanas.size() == 2){
-                tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
-                CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
-                rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
-                rv_cursos1.setAdapter(adapter1);
-
-                tv_semana2.setText("Semana del " + semanas.get(1).getFechaInicio() + " al " + semanas.get(1).getFechaFin());
-                CursosAdapter adapter2 = new CursosAdapter(semanas.get(1).getAsignaturas(),this);
-                rv_cursos2.setLayoutManager(new LinearLayoutManager(this));
-                rv_cursos2.setAdapter(adapter2);
-            }else{
-                if(semanas.size() == 3){
+            if(semanas.size() == 2 && semanas.get(1).getAsignaturas().size() != 0){
+                if(semanas.get(1).getAsignaturas().size() == 0){
+                    tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
+                    CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
+                    rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
+                    rv_cursos1.setAdapter(adapter1);
+                }else{
                     tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
                     CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
                     rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
@@ -147,16 +132,39 @@ public class HomeActivity extends AppCompatActivity {
                     CursosAdapter adapter2 = new CursosAdapter(semanas.get(1).getAsignaturas(),this);
                     rv_cursos2.setLayoutManager(new LinearLayoutManager(this));
                     rv_cursos2.setAdapter(adapter2);
+                }
+            }else{
+                if(semanas.size() == 3){
+                    if(semanas.get(2).getAsignaturas().size() == 0){
+                        tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
+                        CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
+                        rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
+                        rv_cursos1.setAdapter(adapter1);
 
-                    tv_semana3.setText("Semana del " + semanas.get(2).getFechaInicio() + " al " + semanas.get(2).getFechaFin());
-                    CursosAdapter adapter3 = new CursosAdapter(semanas.get(2).getAsignaturas(),this);
-                    rv_cursos3.setLayoutManager(new LinearLayoutManager(this));
-                    rv_cursos3.setAdapter(adapter3);
+                        tv_semana2.setText("Semana del " + semanas.get(1).getFechaInicio() + " al " + semanas.get(1).getFechaFin());
+                        CursosAdapter adapter2 = new CursosAdapter(semanas.get(1).getAsignaturas(),this);
+                        rv_cursos2.setLayoutManager(new LinearLayoutManager(this));
+                        rv_cursos2.setAdapter(adapter2);
+                    }else{
+                        tv_semana1.setText("Semana del " + semanas.get(0).getFechaInicio() + " al " + semanas.get(0).getFechaFin());
+                        CursosAdapter adapter1 = new CursosAdapter(semanas.get(0).getAsignaturas(),this);
+                        rv_cursos1.setLayoutManager(new LinearLayoutManager(this));
+                        rv_cursos1.setAdapter(adapter1);
+
+                        tv_semana2.setText("Semana del " + semanas.get(1).getFechaInicio() + " al " + semanas.get(1).getFechaFin());
+                        CursosAdapter adapter2 = new CursosAdapter(semanas.get(1).getAsignaturas(),this);
+                        rv_cursos2.setLayoutManager(new LinearLayoutManager(this));
+                        rv_cursos2.setAdapter(adapter2);
+
+                        tv_semana3.setText("Semana del " + semanas.get(2).getFechaInicio() + " al " + semanas.get(2).getFechaFin());
+                        CursosAdapter adapter3 = new CursosAdapter(semanas.get(2).getAsignaturas(),this);
+                        rv_cursos3.setLayoutManager(new LinearLayoutManager(this));
+                        rv_cursos3.setAdapter(adapter3);
+                    }
                 }
             }
         }
 
-
-
     }
 }
+

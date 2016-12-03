@@ -22,6 +22,33 @@ public class CursosResponse {
             boolean validado;
             String fechaInicio;
             String fechaFin;
+            String tipoClase;
+            int sessionId;
+            int numeroGrupo;
+
+            public int getNumeroGrupo() {
+                return numeroGrupo;
+            }
+
+            public void setNumeroGrupo(int numeroGrupo) {
+                this.numeroGrupo = numeroGrupo;
+            }
+
+            public int getSessionId() {
+                return sessionId;
+            }
+
+            public void setSessionId(int sessionId) {
+                this.sessionId = sessionId;
+            }
+
+            public String getTipoClase() {
+                return tipoClase;
+            }
+
+            public void setTipoClase(String tipoClase) {
+                this.tipoClase = tipoClase;
+            }
 
             public String getFechaInicio() {
                 return fechaInicio;

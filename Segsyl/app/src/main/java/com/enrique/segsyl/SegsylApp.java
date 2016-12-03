@@ -27,8 +27,4 @@ public class SegsylApp extends Application {
     public SegsylServices getServices() {
         return services;
     }
-
-    public SegsylServices getSimpleAuthServices() {
-        return new RequestManager(this).getWebServices();
-    }
 }

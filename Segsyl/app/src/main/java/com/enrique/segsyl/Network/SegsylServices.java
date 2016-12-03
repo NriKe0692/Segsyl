@@ -2,6 +2,9 @@ package com.enrique.segsyl.Network;
 
 import com.enrique.segsyl.Models.CursosResponse;
 import com.enrique.segsyl.Models.LoginResponse;
+import com.enrique.segsyl.Models.TemasResponse;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -23,5 +26,6 @@ public interface SegsylServices {
     @GET(Urls.CURSOS)
     Call<CursosResponse> getCursosDeAlumno(@Path("correo") String correo);
 
-
+    @GET(Urls.TEMAS)
+    Call<ArrayList<TemasResponse>> getTemasPorCurso(@Path("correo") String correo, @Path("session_id") int session_id);
 }

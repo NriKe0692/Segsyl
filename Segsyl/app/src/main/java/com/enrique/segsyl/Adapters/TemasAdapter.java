@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.enrique.segsyl.Models.Tema;
+import com.enrique.segsyl.Models.TemasResponse;
 import com.enrique.segsyl.R;
 
 import java.util.ArrayList;
@@ -20,11 +20,11 @@ import java.util.ArrayList;
 
 public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder>{
 
-    ArrayList<Tema> data;
+    ArrayList<TemasResponse> data;
     Context context;
 
 
-    public TemasAdapter(ArrayList<Tema> data, Context context) {
+    public TemasAdapter(ArrayList<TemasResponse> data, Context context) {
         this.data = data;
         this.context = context;
     }
@@ -38,35 +38,19 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        boolean chekeado = false;
-
-        holder.tv_nombre_tema.setText(data.get(position).getNombreTema());
-
-        if(data.get(position).isVerificado()){
-            holder.checkBox.setChecked(true);
-            chekeado = true;
-        }
-
-        final boolean finalChekeado = chekeado;
+        holder.tv_nombre_tema.setText(data.get(position).getNombre());
 
         View.OnClickListener clickEnCheckBox = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(finalChekeado == false){
-                    if(holder.checkBox.isChecked()){
-                        holder.checkBox.setChecked(false);
-                    }else{
-                        holder.checkBox.setChecked(true);
-                    }
-                }else{
-                    Toast.makeText(context,"No puedes deshacer esto!",Toast.LENGTH_SHORT).show();
+                boolean verificado = false;
+                if(holder.checkBox.isActivated()){
+                    verificado = true;
                 }
             }
         };
 
-        if(chekeado == false){
-            holder.checkBox.setOnClickListener(clickEnCheckBox);
-        }
+        holder.checkBox.setOnClickListener(clickEnCheckBox);
     }
 
     @Override

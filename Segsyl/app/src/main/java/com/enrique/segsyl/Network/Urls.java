@@ -9,4 +9,6 @@ public interface Urls {
     String CURSOS = "api/alumno/{correo}/grupos";
 
     String LOGIN = "api/login";
+
+    String TEMAS = "api/temas/{correo}/{session_id}";
 }

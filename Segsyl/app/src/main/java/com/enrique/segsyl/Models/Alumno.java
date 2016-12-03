@@ -8,6 +8,9 @@ public class Alumno {
     String username;
     String pass;
 
+    public Alumno() {
+    }
+
     public Alumno(String username, String pass) {
         this.username = username;
         this.pass = pass;

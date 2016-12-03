@@ -31,31 +31,14 @@ public class RequestManager {
         defaultRequestManager = retrofit.create(SegsylServices.class);
     }
 
-    public RequestManager(Context context) {
-        retrofit = generateSimpleRetrofit(context);
-        defaultRequestManager = retrofit.create(SegsylServices.class);
-    }
-
     public SegsylServices getWebServices(){
         return defaultRequestManager;
     }
-
-
 
     private static Retrofit generateRetrofit() {
         Gson gson = new GsonBuilder().create();
 
         final OkHttpClient client = getOkHttpClient();
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL);
-        builder = builder.addConverterFactory(GsonConverterFactory.create(gson));
-        return builder.client(client).build();
-    }
-
-    private static Retrofit generateSimpleRetrofit(final Context context) {
-        Gson gson = new GsonBuilder().create();
-
-        final OkHttpClient client = getSimpleOkHttpClient(context);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL);
         builder = builder.addConverterFactory(GsonConverterFactory.create(gson));
@@ -93,33 +76,4 @@ public class RequestManager {
         return builder.build();
     }
 
-    private static OkHttpClient getSimpleOkHttpClient(final Context context) {
-        OkHttpClient.Builder builder = new OkHttpClient().newBuilder()
-                .readTimeout(12, TimeUnit.SECONDS)
-                .connectTimeout(20, TimeUnit.SECONDS);
-
-        //For adding logs of APIs requests & responses
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(interceptor);
-
-        //General interceptor with authorization token
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                Request.Builder requestBuilder = original.newBuilder()
-                        .header("Content-Type", "application/x-www-form-urlencoded")
-                        .method(original.method(), original.body());
-                return chain.proceed(requestBuilder.build());
-            }
-        });
-
-        return builder.build();
-    }
-
-    public static Retrofit getRetrofit() {
-        return retrofit;
-    }
 }

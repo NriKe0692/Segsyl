@@ -24,15 +24,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goNext() {
-        if(!PreferenceManager.getInstance(this).getPrefernceAlumnoString().isEmpty()){
-            Intent intent = new Intent(this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }else{
-            Intent intent = new Intent(this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
+        Intent i = new Intent(this,LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }

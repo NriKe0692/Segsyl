@@ -41,10 +41,11 @@ public class PreferenceManager {
     }
 
     public String getPrefernceAlumnoString(){
-        return mPreferences.getString(PREFERENCES_USER, "");
+        return mPreferences.getString(PREFERENCES_USER,"");
     }
 
-    public Alumno getPreferencAlumno(String alumno_json){
+    public Alumno getPreferencAlumno(){
+        String alumno_json = getPrefernceAlumnoString();
         JsonParser json_parser = new JsonParser();
         if (!json_parser.parse(alumno_json).isJsonNull()){
             JsonObject json = (JsonObject) json_parser.parse(alumno_json);

@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                                 if(response.body().getResponse().equals("YES")){
                                     Alumno a = new Alumno(username,password);
                                     mPreferences.setPreferencesUser(a);
-                                    Toast.makeText(context,"JUNI CABROOOOOOOOOOOOOO!",Toast.LENGTH_SHORT).show();
                                     launchHome();
                                 }if(response.body().getResponse().equals("NO")){
                                     Toast.makeText(context,"Usuario no valido!",Toast.LENGTH_SHORT).show();

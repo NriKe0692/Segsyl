@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.enrique.segsyl.Activities.LoginActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash2"
+        android:alpha="0.5"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/colorPrimary"/>
+            android:background="@drawable/logo_fisi"/>
 
         <TextView
             android:layout_marginTop="20dp"
@@ -56,6 +62,8 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="#ffffff"
             android:text="Login"/>
 
     </LinearLayout>
