@@ -1,9 +1,9 @@
 package com.enrique.segsyl;
 
-import android.app.Application;
+        import android.app.Application;
 
-import com.enrique.segsyl.Network.RequestManager;
-import com.enrique.segsyl.Network.SegsylServices;
+        import com.enrique.segsyl.Network.RequestManager;
+        import com.enrique.segsyl.Network.SegsylServices;
 
 /**
  * Created by USUARIO on 26/11/2016.

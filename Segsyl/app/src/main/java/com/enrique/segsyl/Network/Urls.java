@@ -11,4 +11,6 @@ public interface Urls {
     String LOGIN = "api/login";
 
     String TEMAS = "api/temas/{correo}/{session_id}";
+
+    String VALIDAR = "api/temas/{correo}/{session_id}";
 }

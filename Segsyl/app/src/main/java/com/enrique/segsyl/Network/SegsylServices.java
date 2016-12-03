@@ -3,11 +3,14 @@ package com.enrique.segsyl.Network;
 import com.enrique.segsyl.Models.CursosResponse;
 import com.enrique.segsyl.Models.LoginResponse;
 import com.enrique.segsyl.Models.TemasResponse;
+import com.enrique.segsyl.Models.ValidadoResponse;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -28,4 +31,8 @@ public interface SegsylServices {
 
     @GET(Urls.TEMAS)
     Call<ArrayList<TemasResponse>> getTemasPorCurso(@Path("correo") String correo, @Path("session_id") int session_id);
+
+    @FormUrlEncoded
+    @POST(Urls.VALIDAR)
+    Call<ValidadoResponse> validarTemas(@Path("correo") String correo, @Path("session_id") int session_id, @FieldMap Map<String,String> comentarios);
 }

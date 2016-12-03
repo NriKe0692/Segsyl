@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
 
     ArrayList<TemasResponse> data;
     Context context;
+    ArrayList<String> comentarios;
+    ArrayList<Boolean> validados;
 
 
     public TemasAdapter(ArrayList<TemasResponse> data, Context context) {
@@ -37,20 +40,43 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.tv_nombre_tema.setText(data.get(position).getNombre());
 
-        View.OnClickListener clickEnCheckBox = new View.OnClickListener() {
+        holder.checkBox.setChecked(false);
+
+        validados.add(position,false);
+
+        final View.OnClickListener clickEnCheckBox = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean verificado = false;
-                if(holder.checkBox.isActivated()){
-                    verificado = true;
+                if(!holder.checkBox.isChecked()){
+                    holder.checkBox.setChecked(true);
+                    validados.add(position,true);
+                }else{
+                    holder.checkBox.setChecked(false);
+                    validados.add(position,false);
                 }
             }
         };
 
         holder.checkBox.setOnClickListener(clickEnCheckBox);
+    }
+
+    public ArrayList<String> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(ArrayList<String> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public ArrayList<Boolean> getValidados() {
+        return validados;
+    }
+
+    public void setValidados(ArrayList<Boolean> validados) {
+        this.validados = validados;
     }
 
     @Override
@@ -62,11 +88,13 @@ public class TemasAdapter extends RecyclerView.Adapter<TemasAdapter.MyViewHolder
 
         TextView tv_nombre_tema;
         CheckBox checkBox;
+        EditText et_comentario;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_nombre_tema = (TextView) itemView.findViewById(R.id.tv_nombre_tema);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+            et_comentario = (EditText) itemView.findViewById(R.id.et_comentario);
         }
     }
 }

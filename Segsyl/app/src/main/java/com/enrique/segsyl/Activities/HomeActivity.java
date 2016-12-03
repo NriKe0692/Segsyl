@@ -27,7 +27,6 @@ public class HomeActivity extends AppCompatActivity {
 
     TextView tv_bienvenido;
 
-
     LinearLayout container1;
     LinearLayout container2;
     LinearLayout container3;
@@ -66,6 +65,12 @@ public class HomeActivity extends AppCompatActivity {
 
         getDataForRv();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataForRv();
     }
 
     private void getDataForRv(){

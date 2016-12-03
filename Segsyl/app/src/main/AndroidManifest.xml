@@ -24,9 +24,6 @@
         <activity android:name=".Activities.HomeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.CursoActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
         <activity android:name=".Activities.TemasPorCursoActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

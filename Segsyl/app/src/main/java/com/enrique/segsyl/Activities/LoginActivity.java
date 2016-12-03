@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.enrique.segsyl.Models.Alumno;
+import com.enrique.segsyl.Models.CursosResponse;
 import com.enrique.segsyl.Models.LoginResponse;
 import com.enrique.segsyl.Network.SegsylServices;
 import com.enrique.segsyl.R;

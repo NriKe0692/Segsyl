@@ -32,9 +32,12 @@
 
     </LinearLayout>
 
-    <View
+    <EditText
+        android:id="@+id/et_comentario"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#000000"/>
+        android:layout_height="wrap_content"
+        android:hint="Comentario... (opcional)"/>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.enrique.segsyl.Activities.TemasPorCursoActivity;
@@ -40,8 +41,15 @@ public class CursosAdapter extends RecyclerView.Adapter<CursosAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        boolean validado = false;
         holder.btn_curso.setText(data.get(position).getAsignaturaNombre() + " (" + data.get(position).getTipoClase() + ")");
+
+        if(data.get(position).isValidado()){
+            holder.btn_verificar.setImageDrawable(ContextCompat.getDrawable(context,android.R.drawable.checkbox_on_background));
+        }else{
+            holder.btn_verificar.setImageDrawable(ContextCompat.getDrawable(context,android.R.drawable.ic_menu_help));
+        }
+
+
 
         switch (data.get(position).getNumeroGrupo()){
             case 1:
@@ -58,16 +66,10 @@ public class CursosAdapter extends RecyclerView.Adapter<CursosAdapter.MyViewHold
                 break;
         }
 
-        if(data.get(position).isValidado()){
-            validado = true;
-        }
-
-        final boolean finalValidado = validado;
-
         View.OnClickListener openNextActivity = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(finalValidado){
+                if(!data.get(position).isValidado()){
                     Intent intent = new Intent(context, TemasPorCursoActivity.class);
                     intent.putExtra("nombreCurso",data.get(position).getAsignaturaNombre());
                     intent.putExtra("inicio",data.get(position).getFechaInicio());
